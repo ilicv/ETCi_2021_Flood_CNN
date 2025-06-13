@@ -184,6 +184,7 @@ def train():
     except RuntimeError as e:
         print(f"ERROR: {e}")
         sys.exit(1)
+    # Load dataset
 
     # Split into train/val/test (60/20/20)
     total = len(dataset)
@@ -194,6 +195,7 @@ def train():
     val_size = train_val_size - train_size
     train_ds, val_ds = random_split(train_val_ds, [train_size, val_size])
     print(f"Dataset split: {train_size} train, {val_size} val, {test_size} test samples")
+    # Split into train/val/test (60/20/20)
 
     # DataLoaders
     train_loader = DataLoader(train_ds, batch_size=BATCH_SIZE, shuffle=True)
@@ -208,6 +210,7 @@ def train():
     scheduler = optim.lr_scheduler.ReduceLROnPlateau(
         optimizer, mode='min', factor=0.5, patience=5, verbose=True
     )
+    # Model, loss, optimizer, scheduler
 
     # History containers
     history = {
@@ -218,6 +221,7 @@ def train():
     }
     best_loss = float('inf')
     wait = 0
+    # History containers
 
     # Training loop
     for epoch in range(1, NUM_EPOCHS + 1):

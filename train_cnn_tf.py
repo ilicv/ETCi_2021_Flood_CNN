@@ -155,8 +155,10 @@ def main():
     samples = find_samples(ROOT_DIR)
     print(f"Found {len(samples)} total samples.")
 
+    # Loading and preprocessing
     print("Loading and preprocessing images...")
     X, y = load_and_preprocess(samples)
+    # Loading and preprocessing
 
     # Split dataset
     N = X.shape[0]
@@ -170,6 +172,7 @@ def main():
     X_val, y_val = X[n_train:n_train+n_val], y[n_train:n_train+n_val]
     X_test, y_test = X[n_train+n_val:], y[n_train+n_val:]
     print(f"Data split: {n_train} train, {n_val} val, {n_test} test samples.")
+    # Split dataset
 
     # Build and compile model
     model = build_model(input_shape=IMAGE_SIZE + (2,))
@@ -179,6 +182,7 @@ def main():
         metrics=[tf.keras.metrics.BinaryAccuracy(name='binary_accuracy')]
     )
     model.summary()
+    # Build and compile model
 
     # Set up callbacks
     ckpt = callbacks.ModelCheckpoint(
@@ -203,10 +207,12 @@ def main():
         callbacks=[ckpt, es, rlr],
         verbose=2
     )
+    # Train model
 
     # Evaluate on test set (combined)
     loss, acc = model.evaluate(X_test, y_test, verbose=0)
     print(f"\nTest Loss: {loss:.4f}, Overall Test Acc: {acc:.4f}")
+    # Evaluate on test set (combined)
 
     # Per-variable accuracy
     logits = model.predict(X_test)
